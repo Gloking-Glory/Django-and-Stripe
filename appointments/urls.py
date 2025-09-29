@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from appointments.views import AppointmentViewSet
 
 router = DefaultRouter()
-router.register('', AppointmentViewSet)
+router.register('', AppointmentViewSet, basename='appointments')
 
 urlpatterns = [
     path('', include(router.urls)),
