@@ -3,6 +3,7 @@ from .models import Payment
 
 class PaymentSerializer(serializers.ModelSerializer):
     content_reformat_obj = serializers.SerializerMethodField()
+    content_object = serializers.SerializerMethodField()
 
     class Meta:
         model = Payment
@@ -19,3 +20,12 @@ class PaymentSerializer(serializers.ModelSerializer):
             "status": obj.status,
             "created_at": obj.created_at.isoformat(),
         }
+    
+    def get_content_object(self, obj):
+        if obj.content_type:
+            return {
+                "id": str(getattr(obj.content_object, "id", "")),
+                "type": obj.content_type.name if obj.content_type else None,
+                "repr": str(obj.content_object),
+            }
+        return None
